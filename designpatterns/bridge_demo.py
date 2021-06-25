@@ -1,5 +1,4 @@
 # coding=utf-8
-import requests;
 
 class A:
     def run(self, name):

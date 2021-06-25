@@ -2,7 +2,6 @@
 __author__ = 'BY'
 """
 https://www.cnblogs.com/onepiece-andy/p/python-flyweight-pattern.html
-大话设计模式
 设计模式——享元模式
 享元模式(Flyweight Pattern):运用共享技术有效地支持大量细粒度的对象
 对一个类进行的实例,只在第一次使用时建立,其他时候是用同一个实例,减少内存的开销

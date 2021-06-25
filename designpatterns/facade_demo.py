@@ -1,3 +1,4 @@
+# 外观模式
 class AlarmSensor:
     def run(self):
         print("Alarm Ring...");
