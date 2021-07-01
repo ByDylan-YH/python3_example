@@ -1,2 +1,0 @@
-url: https://xui.ptlogin2.qq.com/             username: 921644608            password: YangHuan.QQ
-url: https://www.zhihu.com/                   username: 921644606@qq.com     password: BingYi.ZH
