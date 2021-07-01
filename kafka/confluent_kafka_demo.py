@@ -1,7 +1,6 @@
-# coding=utf-8
-from confluent_kafka import KafkaError;
-from confluent_kafka.avro import AvroConsumer;
-from confluent_kafka.avro.serializer import SerializerError;
+from confluent_kafka import KafkaError
+from confluent_kafka.avro import AvroConsumer
+from confluent_kafka.avro.serializer import SerializerError
 
 consumber = AvroConsumer({
     'sasl.mechanism': 'PLAIN',
@@ -15,21 +14,21 @@ consumber = AvroConsumer({
                            'http://77.1.22.73:8081,http://77.1.22.74:8081,http://77.1.22.75:8081,'
                            'http://77.1.22.76:8081,http://77.1.22.77:8081,http://77.1.22.78:8081,'
                            'http://77.1.22.79:8081,http://77.1.22.80:8081,http://77.1.22.81:8081',
-    'group.id': 'group_id'});
+    'group.id': 'group_id'})
 
-consumber.subscribe(['CQDSJB_GXPT_DB.GX_SH_LWZX_SMGPXX']);
+consumber.subscribe(['CQDSJB_GXPT_DB.GX_SH_LWZX_SMGPXX'])
 
 while True:
     try:
-        message = consumber.poll(100);
+        message = consumber.poll(100)
     except SerializerError as e:
-        print("Message deserialization failed for {}: {}".format(message, e));
-        break;
+        print("Message deserialization failed for {}: {}".format(message, e))
+        break
     if message is None:
-        continue;
+        continue
     if message.error():
-        print("AvroConsumer error: {}".format(message.error()));
-        continue;
-    print(message.value());
+        print("AvroConsumer error: {}".format(message.error()))
+        continue
+    print(message.value())
 
-consumber.close();
+consumber.close()

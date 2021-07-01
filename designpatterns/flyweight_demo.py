@@ -1,4 +1,3 @@
-# coding=utf-8
 __author__ = 'BY'
 """
 https://www.cnblogs.com/onepiece-andy/p/python-flyweight-pattern.html

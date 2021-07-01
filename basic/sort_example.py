@@ -1,5 +1,3 @@
-# coding=utf-8
-
 # 冒泡排序
 def bubble_sort(alist):
     for j in range(len(alist) - 1):

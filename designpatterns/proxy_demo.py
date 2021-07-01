@@ -1,4 +1,3 @@
-# coding=utf-8
 from abc import abstractmethod
 
 # 定义用户接口，A和B服务都引用此接口

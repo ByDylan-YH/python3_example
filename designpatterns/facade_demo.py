@@ -1,17 +1,17 @@
 # 外观模式
 class AlarmSensor:
     def run(self):
-        print("Alarm Ring...");
+        print("Alarm Ring...")
 
 
 class WaterSprinker:
     def run(self):
-        print("Spray Water...");
+        print("Spray Water...")
 
 
 class EmergencyDialer:
     def run(self):
-        print("Dial 119...");
+        print("Dial 119...")
 
 
 class EmergencyFacade:
@@ -20,16 +20,16 @@ class EmergencyFacade:
     """
 
     def __init__(self):
-        self.alarm_sensor = AlarmSensor();
-        self.water_sprinker = WaterSprinker();
-        self.emergency_dialer = EmergencyDialer();
+        self.alarm_sensor = AlarmSensor()
+        self.water_sprinker = WaterSprinker()
+        self.emergency_dialer = EmergencyDialer()
 
     def runAll(self):
-        self.alarm_sensor.run();
-        self.water_sprinker.run();
-        self.emergency_dialer.run();
+        self.alarm_sensor.run()
+        self.water_sprinker.run()
+        self.emergency_dialer.run()
 
 
 if __name__ == "__main__":
-    emergency_facade = EmergencyFacade();
-    emergency_facade.runAll();
+    emergency_facade = EmergencyFacade()
+    emergency_facade.runAll()

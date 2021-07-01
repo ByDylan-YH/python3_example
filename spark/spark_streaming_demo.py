@@ -1,5 +1,3 @@
-# coding=utf-8
-# nc -l -p 9999
 # 第一种创建方式
 # from pyspark import SparkContext
 # 第二种创建方式

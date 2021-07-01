@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 classmates = ('Michael', 'Bob', 'Tracy')
 print('classmates =', classmates)
 print('len(classmates) =', len(classmates))

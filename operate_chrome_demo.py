@@ -1,5 +1,3 @@
-# coding=utf8
-
 from selenium import webdriver
 
 

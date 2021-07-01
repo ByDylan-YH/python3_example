@@ -1,11 +1,4 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-########## prepare ##########
-
-# install mysql-connector-python:
 # pip3 install mysql-connector-python --allow-external mysql-connector-python
-
 import mysql.connector
 
 conn = mysql.connector.connect(user='root', password='password', database='test')

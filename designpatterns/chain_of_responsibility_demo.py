@@ -1,5 +1,3 @@
-# coding=utf-8
-
 # 责任链模式
 # 抽象接口
 class Handler:

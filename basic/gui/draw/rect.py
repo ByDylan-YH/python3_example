@@ -1,4 +1,3 @@
-# 导入turtle包的所有内容:
 from turtle import *
 
 # 设置笔刷宽度:
