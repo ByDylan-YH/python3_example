@@ -1,5 +1,3 @@
-from kafka import KafkaConsumer
-
 consumer = kafka_avro_binary_consumer("CQDSJB_GXPT_DB.GX_SH_LWZX_SMGPXX",
                          sasl_mechanism="PLAIN",
                          sasl_plain_username="admin",

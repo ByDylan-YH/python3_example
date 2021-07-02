@@ -1,7 +1,6 @@
 import io
-import avro.io
 import avro.schema
-from kafka import KafkaConsumer
+from example.kafka import KafkaConsumer
 
 consumer = KafkaConsumer("CQDSJB_GXPT_DB.GX_SH_LWZX_SMGPXX",
                                       sasl_mechanism="PLAIN",
