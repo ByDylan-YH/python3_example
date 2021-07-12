@@ -5,7 +5,8 @@ from pdfminer.converter import PDFPageAggregator
 from pdfminer.layout import LTTextBoxHorizontal, LAParams
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.pdfpage import PDFPage, PDFTextExtractionNotAllowed
-
+# 另外可以了解下: pdfplumber ,貌似更好用
+# https://mp.weixin.qq.com/s/urqj9ba6ffBX_UwZCkVBYQ
 
 # 读取url中的pdf
 def read_pdf(pdf_path):
