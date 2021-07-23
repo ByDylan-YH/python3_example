@@ -1,5 +1,6 @@
 import logging
 
+
 class Logger(object):
     def __init__(self, log_file_name, log_level, logger_name=None):
         # 创建一个logger
@@ -21,6 +22,7 @@ class Logger(object):
 
     def get_log(self):
         return self.__logger
+
 
 if __name__ == '__main__':
     logger = Logger(log_file_name='log.txt', log_level=logging.INFO).get_log()

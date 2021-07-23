@@ -2,6 +2,7 @@ import time
 import logging
 from apscheduler.schedulers.blocking import BlockingScheduler
 
+
 class Logger(object):
     def __init__(self, log_file_name, log_level, logger_name=None):
         # 创建一个logger
@@ -24,9 +25,11 @@ class Logger(object):
     def get_log(self):
         return self.__logger
 
+
 def job(text):
     t = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
     logger.info('{} --- {}'.format(text, t))
+
 
 if __name__ == '__main__':
     logger = Logger(log_file_name='log.txt', log_level=logging.INFO).get_log()
