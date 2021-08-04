@@ -25,5 +25,5 @@ class Logger(object):
 
 
 if __name__ == '__main__':
-    logger = Logger(log_file_name='log.txt', log_level=logging.INFO).get_log()
-    logger.info("测试")
+    log = Logger(log_file_name='log.txt', log_level=logging.INFO).get_log()
+    log.info("测试")

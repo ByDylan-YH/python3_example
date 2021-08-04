@@ -1,131 +1,131 @@
 # coding=utf-8
 # 导入requests库
-import requests;
-from bs4 import BeautifulSoup;
-import re;
-import mysql.connector;
-import time;
-import jieba;
+import requests
+from bs4 import BeautifulSoup
+import re
+import mysql.connector
+import time
+import jieba
 
 mydb = mysql.connector.connect(
     host="localhost",  # 数据库主机地址
     user="root",  # 数据库用户名
     passwd="By960122",  # 数据库密码
     database="bingo"
-);
+)
 
 # 给请求指定一个请求头来模拟chrome浏览器,地址栏中输入  about:version
 headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36'};
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0 Win64 x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36'}
 # 网址
-addr = 'https://www.12306.cn/mormhweb/kyyyz';
+addr = 'https://www.12306.cn/mormhweb/kyyyz'
 
 
 # 计时器
 def timer(func):
     def wrapper(*args, **kwds):
-        t0 = time.time();
-        func(*args, **kwds);
-        t1 = time.time();
-        print('耗时 %0.3f s' % (t1 - t0,));
+        t0 = time.time()
+        func(*args, **kwds)
+        t1 = time.time()
+        print('耗时 %0.3f s' % (t1 - t0,))
 
-    return wrapper;
+    return wrapper
 
 
 # 获取12306网站所有集团下html
 def get_html(addr):
-    res = requests.get(addr, headers=headers);
-    html = res.content;
-    html_doc = str(html, 'utf8');
+    res = requests.get(addr, headers=headers)
+    html = res.content
+    html_doc = str(html, 'utf8')
     # 使用自带的html.parser解析,获取首页
-    homepage = BeautifulSoup(html_doc, 'html.parser');
-    html_detail = homepage.find('table', id='mainTable').find_all('tbody');
-    html_list = [];
+    homepage = BeautifulSoup(html_doc, 'html.parser')
+    html_detail = homepage.find('table', id='mainTable').find_all('tbody')
+    html_list = []
     for htmls in html_detail:
-        # print(html.get_text());
-        # print(html);
-        # print(html.get('title'));
+        # print(html.get_text())
+        # print(html)
+        # print(html.get('title'))
         try:
-            aa = htmls.find('td', class_='submenu_bg').find_all('a');
-            # print(aa);
+            aa = htmls.find('td', class_='submenu_bg').find_all('a')
+            # print(aa)
             for a in aa:
-                html_list.append(a.get('href').replace("./", "/"));
+                html_list.append(a.get('href').replace("./", "/"))
         except Exception as e:
-            pass;
+            pass
 
-    return html_list;
+    return html_list
 
 
 # 获取每个html下的车站信息
 def get_station(station_addr):
-    req = requests.get(url=station_addr);
-    html = req.content;
-    html_doc = str(html, 'utf8');
-    bf = BeautifulSoup(html_doc, 'html.parser');
-    station_list = [];
+    req = requests.get(url=station_addr)
+    html = req.content
+    html_doc = str(html, 'utf8')
+    bf = BeautifulSoup(html_doc, 'html.parser')
+    station_list = []
     try:
-        texts = bf.find('tbody').find_all('tr');
-        # print(texts);
+        texts = bf.find('tbody').find_all('tr')
+        # print(texts)
         for text in texts:
             # 不要 √ 符号的内容,正则匹配之后为list,转成str存好.
-            station_list.append(("".join(re.compile(r'[^√]').findall(text.get_text()))));
+            station_list.append(("".join(re.compile(r'[^√]').findall(text.get_text()))))
     except Exception as e:
         pass
-    return station_list;
+    return station_list
 
 
 def parse_addr(station_result):
-    station_list = [];
+    station_list = []
     for station in station_result:
-        station_dict = {};
-        result = jieba.cut(station['addr'], cut_all=False);
-        station_dict['province'], station_dict['city'] = ",".join(result).split(",")[0:2];
-        station_dict['station'] = station['station'];
-        station_dict['addr'] = station['addr'];
-        station_list.append(station_dict);
+        station_dict = {}
+        result = jieba.cut(station['addr'], cut_all=False)
+        station_dict['province'], station_dict['city'] = ",".join(result).split(",")[0:2]
+        station_dict['station'] = station['station']
+        station_dict['addr'] = station['addr']
+        station_list.append(station_dict)
 
-    # print(station_list);
-    return station_list;
+    # print(station_list)
+    return station_list
 
 
 # 写入数据库
 def write_mysql(station_list):
-    sql = 'insert into trationstation values (%s,%s,%s,%s);';
-    insert_list = [];
+    sql = 'insert into trationstation values (%s,%s,%s,%s)'
+    insert_list = []
     for station_detail in station_list:
-        detail_list = [];
-        detail_list.append(station_detail['province']);
-        detail_list.append(station_detail['city']);
-        detail_list.append(station_detail['station']);
-        detail_list.append(station_detail['addr']);
-        insert_list.append(detail_list);
-    # print(insert_list);
-    mycursor = mydb.cursor();
-    mycursor.executemany(sql, insert_list);
-    mydb.commit();
-    # print(mycursor.rowcount, ",Success");
-    print('成功写入数据库: %s 行' % mycursor.rowcount);
+        detail_list = []
+        detail_list.append(station_detail['province'])
+        detail_list.append(station_detail['city'])
+        detail_list.append(station_detail['station'])
+        detail_list.append(station_detail['addr'])
+        insert_list.append(detail_list)
+    # print(insert_list)
+    mycursor = mydb.cursor()
+    mycursor.executemany(sql, insert_list)
+    mydb.commit()
+    # print(mycursor.rowcount, ",Success")
+    print('成功写入数据库: %s 行' % mycursor.rowcount)
 
 
 # 主方法
 @timer
 def main():
-    mycursor = mydb.cursor();
-    mycursor.execute("truncate table trationstation;");
-    html_list = get_html(addr);
+    mycursor = mydb.cursor()
+    mycursor.execute("truncate table trationstation")
+    html_list = get_html(addr)
     for html in html_list:
-        station_result = [];
-        station_addr = addr + html;
-        station_list = get_station(station_addr);
-        # print(station_list);
+        station_result = []
+        station_addr = addr + html
+        station_list = get_station(station_addr)
+        # print(station_list)
         for station in station_list[2:len(station_list)]:
-            station_dict = {};
-            aa = station.split("\n")[1:3];
-            station_dict['station'], station_dict['addr'] = station.split("\n")[1:3];
-            station_result.append(station_dict);
-        station_result = parse_addr(station_result);
-        print(station_result);
-        write_mysql(station_result);
+            station_dict = {}
+            aa = station.split("\n")[1:3]
+            station_dict['station'], station_dict['addr'] = station.split("\n")[1:3]
+            station_result.append(station_dict)
+        station_result = parse_addr(station_result)
+        print(station_result)
+        write_mysql(station_result)
 
 
 if __name__ == '__main__':
@@ -273,6 +273,6 @@ if __name__ == '__main__':
     #                   {'station': '扎兰屯', 'addr': '内蒙古自治区扎兰屯市铁西路22号'}, {'station': '扎罗木得', 'addr': '非客运营业站'},
     #                   {'station': '张维屯', 'addr': '黑龙江省绥化市北林区张维镇'}, {'station': '赵光', 'addr': '黑龙江省黑河市、北安市赵光镇'},
     #                   {'station': '肇东', 'addr': '黑龙江省肇东市铁东一道街'}, {'station': '周家', 'addr': '黑龙江省双城市周家镇'},
-    #                   {'station': '朱家沟', 'addr': '黑龙江省牡丹江市林口县朱家镇'}];
-    # parse_addr(station_result);
-    main();
+    #                   {'station': '朱家沟', 'addr': '黑龙江省牡丹江市林口县朱家镇'}]
+    # parse_addr(station_result)
+    main()
