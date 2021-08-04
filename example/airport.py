@@ -23,13 +23,12 @@ addr = 'http://airport.anseo.cn';
 
 # 计时器
 def timer(func):
-    # https://www.liaoxuefeng.com/wiki/1016959663602400/1017451662295584
     @functools.wraps(func)
     def wrapper(*args, **kwds):
         t0 = time.time();
         func(*args, **kwds);
         t1 = time.time();
-        print('耗时 %0.3f s' % (t1 - t0,));
+        logger.info('%s 执行耗时 %0.3f s, 约 %s 分钟' % (func.__name__, t1 - t0, round((t1 - t0) / 60)))
 
     return wrapper;
 
