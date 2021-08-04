@@ -1,6 +1,16 @@
 from functools import wraps;
 
 
+def timer(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwds):
+        t0 = time.time();
+        func(*args, **kwds);
+        t1 = time.time();
+        logger.info('%s 执行耗时 %0.3f s, 约 %s 分钟' % (func.__name__, t1 - t0, round((t1 - t0) / 60)))
+
+    return wrapper;
+
 def memoize(fn):
     known = dict();
 
